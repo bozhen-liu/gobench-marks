@@ -50,7 +50,7 @@ func (c *rawConnection) Start() {
 
 func (c *rawConnection) readerLoop() {
 	for {
-		select {
+		select { //Blocked here
 		case <-c.closed:
 			return
 		default:

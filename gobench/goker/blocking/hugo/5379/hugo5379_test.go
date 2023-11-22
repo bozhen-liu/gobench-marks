@@ -296,3 +296,5 @@ func TestHugo5379(t *testing.T) {
 	}
 	s.Build()
 }
+
+//No detection results

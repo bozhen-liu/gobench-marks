@@ -17,11 +17,11 @@ type remoteLock struct {
 }
 
 func (l *remoteLock) URLLock(url string) {
-	l.Lock()
+	l.Lock() //blocked here
 	if _, ok := l.m[url]; !ok {
 		l.m[url] = &sync.Mutex{}
 	}
-	l.m[url].Lock()
+	l.m[url].Lock() //blocked here
 	l.Unlock()
 }
 
@@ -57,6 +57,6 @@ func TestHugo3251(t *testing.T) {
 				}
 			}(i)
 		}
-		wg.Wait()
+		wg.Wait() //Blocked here
 	}
 }

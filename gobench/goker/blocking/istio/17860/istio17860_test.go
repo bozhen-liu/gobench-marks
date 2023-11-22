@@ -40,7 +40,7 @@ type agent struct {
 
 func (a *agent) Run(ctx context.Context) {
 	for {
-		select {
+		select { //blocked here
 		case status := <-a.statusCh:
 			a.mu.Lock()
 			delete(a.activeEpochs, int(status))
@@ -87,7 +87,7 @@ func (a *agent) waitUntilLive() {
 	}
 
 	for {
-		select {
+		select { //blocked here
 		case <-timer.C:
 			return
 		case <-interval.C:

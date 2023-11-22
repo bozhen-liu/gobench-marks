@@ -27,7 +27,7 @@ func (m *Mapping) clearAddresses() {
 }
 
 func (m *Mapping) notify(added, remove []Address) {
-	m.mut.RLock() // Second locking
+	m.mut.RLock() // Second locking(Blocked here)
 	m.mut.RUnlock()
 }
 

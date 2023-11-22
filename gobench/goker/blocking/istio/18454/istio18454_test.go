@@ -40,7 +40,7 @@ func (s *Strategy) OnChange() {
 	if s.timer != nil {
 		s.stateLock.Unlock()
 		s.resetChan <- struct{}{}
-		return
+		return //Premature termination
 	}
 	s.startTimerFn()
 	s.stateLock.Unlock()
@@ -85,7 +85,7 @@ func (p *Processor) processEvent() {
 func (p *Processor) Start() {
 	setupFn := func() {
 		for i := 0; i < 1024; i++ {
-			p.eventCh <- Event(0)
+			p.eventCh <- Event(0) //Blocked here
 		}
 	}
 	runFn := func(ctx context.Context) {

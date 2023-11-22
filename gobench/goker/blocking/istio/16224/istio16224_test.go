@@ -100,7 +100,7 @@ func TestIstio16224(t *testing.T) {
 
 	lock.Lock()
 	lock.Unlock()
-	<-done
+	<-done //Blocked here
 
 	close(stop)
 }
