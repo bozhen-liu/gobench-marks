@@ -34,7 +34,7 @@ func (l *loggingT) createFile() error {
 	return nil
 }
 func (l *loggingT) exit(err error) {
-	l.mu.Lock()
+	l.mu.Lock() // block here
 	defer l.mu.Unlock()
 }
 func TestCockroach9935(t *testing.T) {

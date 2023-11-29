@@ -18,7 +18,7 @@ type RowChannel struct {
 }
 
 func (rc *RowChannel) Push() {
-	rc.dataChan <- struct{}{}
+	rc.dataChan <- struct{}{} // block here
 }
 
 func (rc *RowChannel) initWithBufSizeAndNumSenders(chanBufSize int) {

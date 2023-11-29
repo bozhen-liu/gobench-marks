@@ -32,7 +32,7 @@ type Tx struct {
 }
 
 func (tx *Tx) awaitDone() {
-	<-tx.ctx.Done()
+	<-tx.ctx.Done() // leaking
 }
 
 func (tx *Tx) Rollback() {

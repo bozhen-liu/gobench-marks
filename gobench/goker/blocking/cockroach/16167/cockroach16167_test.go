@@ -66,7 +66,7 @@ func (e *Executor) Prepare(session *Session) {
 }
 
 func (e *Executor) getDatabaseCache() {
-	e.systemConfigMu.RLock()
+	e.systemConfigMu.RLock() // Block here
 	defer e.systemConfigMu.RUnlock()
 }
 

@@ -17,7 +17,7 @@ func (g *Gossip) bootstrap() {
 			/// Missing g.mu.Unlock
 			break
 		}
-		g.mu.Unlock()
+		g.mu.Unlock()// block@premature return
 		break
 	}
 }
@@ -29,7 +29,7 @@ func (g *Gossip) manage() {
 			/// Missing g.mu.Unlock
 			break
 		}
-		g.mu.Unlock()
+		g.mu.Unlock()// block@premature return
 		break
 	}
 }

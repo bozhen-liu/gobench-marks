@@ -51,8 +51,8 @@ type tableState struct {
 }
 
 func (t *tableState) release(lease *LeaseState) {
-	t.mu.Lock()
-	defer t.mu.Unlock()
+	t.mu.Lock() // LockB acquire
+	defer t.mu.Unlock() // LockB release
 
 	s := t.active.find(MakeCacheKey(lease))
 	s.mu.Lock()         // LockA acquire

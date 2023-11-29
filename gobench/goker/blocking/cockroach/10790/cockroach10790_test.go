@@ -55,7 +55,7 @@ func (r *Replica) beginCmds(ctx context.Context) {
 	ctxDone := ctx.Done()
 	for _, ch := range r.chans {
 		select {
-		case <-ch:
+		case <-ch: 
 		case <-ctxDone:
 			go func() {
 				for _, ch := range r.chans {

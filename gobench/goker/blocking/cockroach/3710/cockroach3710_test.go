@@ -27,7 +27,7 @@ type Store struct {
 }
 
 func (s *Store) ForceRaftLogScanAndProcess() {
-	s.mu.RLock()
+	s.mu.RLock() // block here 
 	for _, r := range s.replicas {
 		s.raftLogQueue.MaybeAdd(r)
 	}
@@ -43,7 +43,7 @@ func (s *Store) processRaft() {
 	go func() {
 		for {
 			var replicas []*Replica
-			s.mu.Lock()
+			s.mu.Lock() // block here 
 			for _, r := range s.replicas {
 				replicas = append(replicas, r)
 			}

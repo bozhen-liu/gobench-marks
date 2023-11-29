@@ -46,7 +46,7 @@ func NewCompactor() *Compactor {
 }
 
 func (c *Compactor) Start(ctx context.Context, stopper *Stopper) {
-	c.ch <- struct{}{}
+	c.ch <- struct{}{} 
 	stopper.RunWorker(ctx, func(ctx context.Context) {
 		for {
 			select {
@@ -63,7 +63,7 @@ func TestCockroach24808(t *testing.T) {
 	defer stopper.Stop()
 
 	compactor := NewCompactor()
-	compactor.ch <- struct{}{}
+	compactor.ch <- struct{}{} // block here
 
 	compactor.Start(context.Background(), stopper)
 }

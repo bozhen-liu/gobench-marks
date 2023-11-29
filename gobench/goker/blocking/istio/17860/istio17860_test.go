@@ -40,8 +40,8 @@ type agent struct {
 
 func (a *agent) Run(ctx context.Context) {
 	for {
-		select { //blocked here
-		case status := <-a.statusCh:
+		select { 
+		case status := <-a.statusCh: //blocked here
 			a.mu.Lock()
 			delete(a.activeEpochs, int(status))
 			active := len(a.activeEpochs)
@@ -56,7 +56,7 @@ func (a *agent) Run(ctx context.Context) {
 }
 
 func (a *agent) Restart() {
-	a.mu.Lock()
+	a.mu.Lock() //blocked here
 	defer a.mu.Unlock()
 
 	a.waitUntilLive()

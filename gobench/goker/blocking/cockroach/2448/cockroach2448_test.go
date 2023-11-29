@@ -72,7 +72,7 @@ type Store struct {
 func (s *Store) processRaft() {
 	for {
 		select {
-		case e := <-s.multiraft.Events:
+		case e := <-s.multiraft.Events: // block here
 			var callback func()
 			switch e := e.(type) {
 			case *EventMembershipChangeCommitted:

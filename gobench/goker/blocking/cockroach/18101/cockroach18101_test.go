@@ -37,7 +37,7 @@ func restore(ctx context.Context) bool {
 
 func splitAndScatter(ctx context.Context, readyForImportCh chan bool) {
 	for i := 0; i < chanSize+2; i++ {
-		readyForImportCh <- (false || i != 0)
+		readyForImportCh <- (false || i != 0) // leaking
 	}
 }
 

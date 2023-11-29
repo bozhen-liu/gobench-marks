@@ -26,7 +26,7 @@ func (rs *Rows) initContextClose(ctx context.Context) {
 }
 
 func (rs *Rows) awaitDone(ctx context.Context) {
-	<-ctx.Done()
+	<-ctx.Done() // leaking
 	rs.close(ctx.Err())
 }
 

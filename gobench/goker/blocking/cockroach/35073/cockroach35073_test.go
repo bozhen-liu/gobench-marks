@@ -45,7 +45,7 @@ func (rc *RowChannel) Push() ConsumerStatus {
 		atomic.LoadUint32((*uint32)(&rc.consumerStatus)))
 	switch consumerStatus {
 	case NeedMoreRows:
-		rc.dataChan <- RowChannelMsg(0)
+		rc.dataChan <- RowChannelMsg(0) // block here
 	case DrainRequested:
 	case ConsumerClosed:
 	}
