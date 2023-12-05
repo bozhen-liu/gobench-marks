@@ -46,7 +46,7 @@ func runElectionFunc() {
 				close(nextc)
 				nextc = make(chan bool)
 			}
-			<-rcNextc // Followers is blocking here
+			<-rcNextc // Followers is blocking here, but pos unavailable
 		}
 	}
 	doRounds(rcs, 100)
@@ -70,7 +70,7 @@ func doRounds(rcs []roundClient, rounds int) {
 			}
 		}(&rcs[i])
 	}
-	wg.Wait()
+	wg.Wait() // wait forever
 }
 
 ///

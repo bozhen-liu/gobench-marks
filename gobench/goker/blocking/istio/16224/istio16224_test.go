@@ -88,9 +88,9 @@ func TestIstio16224(t *testing.T) {
 	done := make(chan bool)
 	lock := sync.Mutex{}
 	controller.RegisterEventHandler(func(event Event) {
-		lock.Lock() 
+		lock.Lock() //Blocked here, depends on who locks first
 		defer lock.Unlock()
-		done <- true //Blocked here
+		done <- true //Blocked here, pos unavailable
 	})
 
 	stop := make(chan struct{})
@@ -98,7 +98,7 @@ func TestIstio16224(t *testing.T) {
 
 	controller.Create()
 
-	lock.Lock() //Blocked here
+	lock.Lock() //Blocked here, depends on who locks first
 	lock.Unlock()
 	<-done //Blocked here
 

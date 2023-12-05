@@ -40,9 +40,9 @@ func (s *statusManager) DeletePodStatus() {
 }
 
 func (s *statusManager) SetPodStatus() {
-	s.podStatusesLock.Lock()
+	s.podStatusesLock.Lock() // may block here
 	defer s.podStatusesLock.Unlock()
-	s.podStatusChannel <- true
+	s.podStatusChannel <- true // block here
 }
 
 func NewStatusManager() *statusManager {

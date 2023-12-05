@@ -18,7 +18,7 @@ type plugins struct {
 func (p *Plugin) waitActive() {
 	p.activateWait.L.Lock()
 	for !p.activated {
-		p.activateWait.Wait()
+		p.activateWait.Wait() // block here
 	}
 	p.activateWait.L.Unlock()
 }

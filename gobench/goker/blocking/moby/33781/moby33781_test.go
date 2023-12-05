@@ -30,7 +30,7 @@ func monitor(stop chan bool) {
 			results := make(chan bool)
 			ctx, cancelProbe := context.WithTimeout(context.Background(), probeTimeout)
 			go func() { // G3
-				results <- true
+				results <- true // block here, leaking
 				close(results)
 			}()
 			select {

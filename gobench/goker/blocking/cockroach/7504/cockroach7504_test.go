@@ -175,5 +175,5 @@ func TestCockroach7504(t *testing.T) {
 		wg.Done()
 	}()
 	
-	wg.Wait()
+	wg.Wait() // wait forever
 }

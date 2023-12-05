@@ -106,7 +106,7 @@ type ClientConn struct {
 }
 
 func (cc *ClientConn) lbWatcher() {
-	for addr := range cc.dopts.balancer.Notify() {
+	for addr := range cc.dopts.balancer.Notify() { // is rr.addrCh
 		if addr {
 			// nop, make compiler happy
 		}

@@ -24,9 +24,9 @@ func finishRequest(timeout time.Duration, fn func() error) {
 	errCh := make(chan error) // FIX: errCh := make(chan error, 1)
 	go func() {               // G2
 		if err := fn(); err != nil {
-			errCh <- err
+			errCh <- err // block here, leaking
 		} else {
-			ch <- true
+			ch <- true // or block here, leaking
 		}
 	}()
 

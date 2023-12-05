@@ -19,7 +19,7 @@ import (
 func Go(f func() error) chan error {
 	ch := make(chan error)
 	go func() {
-		ch <- f() // G2
+		ch <- f() // G2: leaking
 	}()
 	return ch
 }

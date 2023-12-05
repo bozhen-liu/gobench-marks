@@ -74,7 +74,7 @@ func (s *Health) OpenMonitorChannel() chan struct{} {
 
 func (s *Health) CloseMonitorChannel() {
 	if s.stop != nil {
-		s.stop <- struct{}{}
+		s.stop <- struct{}{} // block here
 	}
 }
 
@@ -90,7 +90,7 @@ func monitor(c *Container, stop chan struct{}) {
 }
 
 func handleProbeResult(c *Container) {
-	c.Lock()
+	c.Lock() // block here
 	defer c.Unlock()
 }
 

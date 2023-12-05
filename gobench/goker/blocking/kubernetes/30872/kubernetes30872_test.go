@@ -83,7 +83,7 @@ type federatedInformerImpl struct {
 }
 
 func (f *federatedInformerImpl) ClustersSynced() {
-	f.Lock()
+	f.Lock() // block here 
 	defer f.Unlock()
 	f.clusterInformer.controller.HasSynced()
 }
@@ -102,7 +102,7 @@ func (f *federatedInformerImpl) Start() {
 }
 
 func (f *federatedInformerImpl) Stop() {
-	f.Lock()
+	f.Lock() // block here 
 	defer f.Unlock()
 	close(f.clusterInformer.stopChan)
 }

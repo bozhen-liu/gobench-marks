@@ -19,7 +19,7 @@ type Plugin struct {
 func (p *Plugin) waitActive() error {
 	p.activateWait.L.Lock()
 	for !p.activated() {
-		p.activateWait.Wait()
+		p.activateWait.Wait() // block here
 	}
 	p.activateWait.L.Unlock()
 	return p.activateErr

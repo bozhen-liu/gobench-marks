@@ -29,12 +29,12 @@ func (rdc *rangeDescriptorCache) LookupRangeDescriptor() {
 	rdc.rangeCacheMu.RLock()
 	fmt.Printf("lookup range descriptor: %s", rdc)
 	rdc.rangeCacheMu.RUnlock()
-	rdc.rangeCacheMu.Lock()
+	rdc.rangeCacheMu.Lock() // block here
 	rdc.rangeCacheMu.Unlock()
 }
 
 func (rdc *rangeDescriptorCache) String() string {
-	rdc.rangeCacheMu.RLock()
+	rdc.rangeCacheMu.RLock() // block here
 	defer rdc.rangeCacheMu.RUnlock()
 	return rdc.stringLocked()
 }

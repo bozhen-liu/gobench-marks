@@ -35,7 +35,7 @@ func newWatchBroadcasts() *watchBroadcasts {
 }
 
 func (wbs *watchBroadcasts) coalesce(wb *watchBroadcast) {
-	wbs.mu.Lock()
+	wbs.mu.Lock() // block here
 	wbs.mu.Unlock()
 }
 
@@ -43,7 +43,7 @@ func (wbs *watchBroadcasts) stop() {
 	wbs.mu.Lock()
 	defer wbs.mu.Unlock()
 	close(wbs.updatec)
-	<-wbs.donec
+	<-wbs.donec // block here, but pos unavailable
 }
 
 func (wbs *watchBroadcasts) update(wb *watchBroadcast) {

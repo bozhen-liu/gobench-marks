@@ -25,12 +25,12 @@ type DeviceSet struct {
 }
 
 func (devices *DeviceSet) DeleteDevice(hash string) {
-	devices.Lock()
+	devices.Lock() // block here
 	defer devices.Unlock()
 
 	info := devices.lookupDevice(hash)
 
-	info.lock.Lock()
+	info.lock.Lock() // block here
 	defer info.lock.Unlock()
 
 	devices.deleteDevice(info)

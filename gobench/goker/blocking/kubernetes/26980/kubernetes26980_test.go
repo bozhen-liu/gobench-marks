@@ -25,7 +25,7 @@ func (p *processorListener) pop(stopCh <-chan struct{}) {
 	defer p.lock.Unlock()
 	for {
 		for len(p.pendingNotifications) == 0 {
-			select {
+			select { // or block here
 			case <-stopCh:
 				return
 			default:

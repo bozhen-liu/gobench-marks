@@ -33,7 +33,7 @@ Loop:
 	for {
 		select {
 		case <-i.conn.closeChan:
-			i.writeLock.Lock()
+			i.writeLock.Lock() // block here
 			close(resetChan)
 			i.resetChan = nil
 			i.writeLock.Unlock()
@@ -48,7 +48,7 @@ func (i *idleAwareFramer) WriteFrame() {
 	if i.resetChan == nil {
 		return
 	}
-	i.resetChan <- true
+	i.resetChan <- true // block here, leaking
 }
 
 func NewIdleAwareFramer() *idleAwareFramer {

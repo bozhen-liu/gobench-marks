@@ -30,7 +30,7 @@ func (c *cacheWatcher) process(initEvents []watchCacheEvent) {
 }
 
 func (c *cacheWatcher) sendWatchCacheEvent(event *watchCacheEvent) {
-	c.result <- Event(*event)
+	c.result <- Event(*event) // block here
 }
 
 func (c *cacheWatcher) Stop() {

@@ -23,7 +23,7 @@ func (bc *benchmarkClient) doCloseLoopUnary() {
 		done := make(chan bool)
 		go func() { // G2
 			if rand.Intn(10) > 7 {
-				done <- false
+				done <- false // leaking
 				return
 			}
 			done <- true

@@ -141,7 +141,7 @@ type simpleBalancer struct {
 }
 
 func (b *simpleBalancer) Up(addr Address) func() {
-	b.mu.Lock()
+	b.mu.Lock() // block here
 	defer b.mu.Unlock()
 
 	if b.closed {
@@ -163,7 +163,7 @@ func (b *simpleBalancer) Up(addr Address) func() {
 		defer b.mu.Unlock()
 		if b.pinAddr == addr {
 			b.pinAddr = 0
-			b.notifyCh <- b.addrs
+			b.notifyCh <- b.addrs // block here
 		}
 	}
 }
@@ -173,7 +173,7 @@ func (b *simpleBalancer) Notify() <-chan []Address {
 }
 
 func (b *simpleBalancer) Close() {
-	b.mu.Lock()
+	b.mu.Lock() // block here
 	defer b.mu.Unlock()
 	if b.closed {
 		return
@@ -211,5 +211,5 @@ func TestEtcd7443(t *testing.T) {
 		sb.Close()
 	}()
 	go conn.Close()
-	<-closec
+	<-closec // block here
 }

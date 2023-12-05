@@ -21,7 +21,7 @@ type node struct {
 
 func (n *node) Status() Status {
 	c := make(chan Status)
-	n.status <- c
+	n.status <- c // blocked, leaking
 	return <-c
 }
 

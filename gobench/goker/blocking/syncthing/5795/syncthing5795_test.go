@@ -50,8 +50,8 @@ func (c *rawConnection) Start() {
 
 func (c *rawConnection) readerLoop() {
 	for {
-		select { //Blocked here
-		case <-c.closed:
+		select { 
+		case <-c.closed: // blocked here
 			return
 		default:
 		}
@@ -64,12 +64,12 @@ func (c *rawConnection) dispatcherLoop() {
 	for {
 		select {
 		case msg = <-c.inbox:
-		case <-c.closed:
+		case <-c.closed: // blocked here
 			return
 		}
 		switch msg := msg.(type) {
 		case *ClusterConfig:
-			c.receiver.ClusterConfig(msg)
+			c.receiver.ClusterConfig(msg) // block here
 		default:
 			return
 		}
@@ -79,7 +79,7 @@ func (c *rawConnection) dispatcherLoop() {
 func (c *rawConnection) internalClose() {
 	c.closeOnce.Do(func() {
 		close(c.closed)
-		<-c.dispatcherLoopStopped
+		<-c.dispatcherLoopStopped // block here, pos unavailable
 	})
 }
 
@@ -106,5 +106,5 @@ func TestSyncthing5795(t *testing.T) {
 	c.Start()
 	c.inbox <- &ClusterConfig{}
 
-	<-c.dispatcherLoopStopped
+	<-c.dispatcherLoopStopped // blocked here
 }

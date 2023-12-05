@@ -46,7 +46,7 @@ type ClientConn struct {
 }
 
 func (cc *ClientConn) lbWatcher(doneChan chan bool) {
-	for addr := range cc.dopts.balancer.Notify() {
+	for addr := range cc.dopts.balancer.Notify() { // is rr.addrCh
 		if addr {
 			// nop, make compiler happy
 		}
@@ -83,7 +83,7 @@ func DialContext() {
 		if ch != nil {
 			doneChan := make(chan bool)
 			go cc.lbWatcher(doneChan) // G3
-			<-doneChan                /// Block here
+			<-doneChan                /// Block here, but pos unavailable
 		}
 	}()
 	/// close addrCh

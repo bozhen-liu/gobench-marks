@@ -46,8 +46,8 @@ type notifier struct {
 }
 
 func (n *notifier) serviceLoop(abort <-chan struct{}) {
-	n.lock.Lock()
-	defer n.lock.Unlock()
+	n.lock.Lock() // taken 
+	defer n.lock.Unlock() // cannot unlock
 	for {
 		select {
 		case <-abort:
@@ -55,11 +55,11 @@ func (n *notifier) serviceLoop(abort <-chan struct{}) {
 		default:
 			ch := After(n.cond.Wait)
 			select {
-			case <-abort:
+			case <-abort: 
 				n.cond.Signal()
 				<-ch
 				return
-			case <-ch:
+			case <-ch: // waiting here
 			}
 		}
 	}
@@ -76,9 +76,9 @@ func Notify(abort <-chan struct{}) {
 					return
 				default:
 					func() {
-						n.lock.Lock()
+						n.lock.Lock() // block here
 						defer n.lock.Unlock()
-						n.cond.Signal()
+						n.cond.Signal() // cannot send signal
 					}()
 				}
 			}
@@ -86,6 +86,7 @@ func Notify(abort <-chan struct{}) {
 	})
 	Until(func() { n.serviceLoop(finished) }, 0, abort)
 }
+
 func TestKubernetes11298(t *testing.T) {
 	done := make(chan struct{})
 	notifyDone := After(func() { Notify(done) })

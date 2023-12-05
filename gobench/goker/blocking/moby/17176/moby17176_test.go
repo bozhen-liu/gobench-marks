@@ -36,7 +36,7 @@ func (devices *DeviceSet) cleanupDeletedDevices() error {
 		/// Missing devices.Unlock()
 		return nil
 	}
-	devices.Unlock()
+	devices.Unlock() // missing unlock 
 	return errors.New("Error")
 }
 
@@ -49,7 +49,7 @@ func testDevmapperLockReleasedDeviceDeletion() {
 	go func() {
 		ds.Lock()
 		defer ds.Unlock()
-		doneChan <- true
+		doneChan <- true // may block if timeout or other goroutine firstly get the lock 
 	}()
 
 	select {

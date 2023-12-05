@@ -29,7 +29,7 @@ func (proxy *UDPProxy) Run() {
 			break
 		}
 	}
-	proxy.connTrackLock.Unlock()
+	proxy.connTrackLock.Unlock() // missing unlock in previous return
 }
 func TestMoby7559(t *testing.T) {
 	proxy := &UDPProxy{}

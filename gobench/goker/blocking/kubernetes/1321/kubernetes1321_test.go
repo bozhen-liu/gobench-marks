@@ -77,7 +77,7 @@ func (m *Mux) distribute() {
 }
 
 func (m *Mux) stopWatching(id int64) {
-	m.lock.Lock()
+	m.lock.Lock() // blocked here
 	defer m.lock.Unlock()
 	w, ok := m.watchers[id]
 	if !ok {

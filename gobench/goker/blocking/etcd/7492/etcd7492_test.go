@@ -50,7 +50,7 @@ func (tm *simpleTokenTTLKeeper) run() {
 	defer tokenTicker.Stop()
 	for {
 		select {
-		case <-tm.addSimpleTokenCh:
+		case <-tm.addSimpleTokenCh: // blocked here
 			/// Make tm.tokens not empty is enough
 			tm.tokens["1"] = time.Now()
 		case <-tokenTicker.C:
@@ -86,13 +86,13 @@ func (t *tokenSimple) assign() {
 }
 
 func (t *tokenSimple) assignSimpleTokenToUser() {
-	t.simpleTokensMu.Lock()
+	t.simpleTokensMu.Lock() // block here
 	t.simpleTokenKeeper.addSimpleToken()
 	t.simpleTokensMu.Unlock()
 }
 func newDeleterFunc(t *tokenSimple) func(string) {
-	return func(tk string) {
-		t.simpleTokensMu.Lock()
+	return func(tk string) { // is deleteTokenFunc
+		t.simpleTokensMu.Lock() // block here
 		defer t.simpleTokensMu.Unlock()
 	}
 }
@@ -154,5 +154,5 @@ func TestEtcd7492(t *testing.T) {
 			as.Authenticate()
 		}()
 	}
-	wg.Wait()
+	wg.Wait() // wait forever
 }

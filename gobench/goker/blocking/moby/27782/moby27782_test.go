@@ -69,7 +69,7 @@ func (w *Watcher) readEvents() {
 		if !event.ignoreLinux(w) {
 			time.Sleep(300 * time.Nanosecond)
 			select {
-			case w.Events <- event:
+			case w.Events <- event: // block here
 			case <-w.done:
 				return
 			}

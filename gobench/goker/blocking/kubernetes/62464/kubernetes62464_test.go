@@ -49,7 +49,7 @@ func (s *stateMemory) GetCPUSet() bool {
 }
 
 func (s *stateMemory) GetDefaultCPUSet() {
-	s.RLock()
+	s.RLock() // blocked here
 	defer s.RUnlock()
 }
 

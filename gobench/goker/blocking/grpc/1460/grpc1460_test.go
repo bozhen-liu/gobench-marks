@@ -28,9 +28,9 @@ type http2Client struct {
 }
 
 func (t *http2Client) keepalive() {
-	t.mu.Lock()
+	t.mu.Lock() // block here, depends on who locks first
 	if len(t.activeStream) < 1 {
-		<-t.awakenKeepalive
+		<-t.awakenKeepalive // block here
 		t.mu.Unlock()
 	} else {
 		t.mu.Unlock()
@@ -38,11 +38,11 @@ func (t *http2Client) keepalive() {
 }
 
 func (t *http2Client) NewStream() {
-	t.mu.Lock()
+	t.mu.Lock() // block here, depends on who locks first
 	t.activeStream = append(t.activeStream, &Stream{})
 	if len(t.activeStream) == 1 {
 		select {
-		case t.awakenKeepalive <- struct{}{}:
+		case t.awakenKeepalive <- struct{}{}: // block here
 			// FIX: t.awakenKeepalive <- struct{}{}
 		default:
 		}

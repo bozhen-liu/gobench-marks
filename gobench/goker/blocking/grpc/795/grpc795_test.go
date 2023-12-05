@@ -13,14 +13,14 @@ type Server struct {
 func (s *Server) GracefulStop() {
 	s.mu.Lock()
 	if s.drain == true {
-		s.mu.Lock()
-		return
+		s.mu.Lock() // block here
+		return // missing unlock
 	}
 	s.drain = true
 } // Missing Unlock
 
 func (s *Server) Serve() {
-	s.mu.Lock()
+	s.mu.Lock() // might block here
 	s.mu.Unlock()
 }
 

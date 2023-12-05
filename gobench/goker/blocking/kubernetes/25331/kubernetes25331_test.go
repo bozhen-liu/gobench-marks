@@ -26,7 +26,7 @@ type watchChan struct {
 }
 
 func (wc *watchChan) Stop() {
-	wc.errChan <- errors.New("Error")
+	wc.errChan <- errors.New("Error") // block here
 	wc.cancel()
 }
 
@@ -35,7 +35,7 @@ func (wc *watchChan) run() {
 	case err := <-wc.errChan:
 		errResult := len(err.Error()) != 0
 		wc.cancel() // Removed in fix
-		wc.resultChan <- errResult
+		wc.resultChan <- errResult // block here, leaking
 	case <-wc.ctx.Done():
 	}
 }
