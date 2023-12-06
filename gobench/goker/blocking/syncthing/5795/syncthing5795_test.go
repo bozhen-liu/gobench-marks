@@ -79,7 +79,7 @@ func (c *rawConnection) dispatcherLoop() {
 func (c *rawConnection) internalClose() {
 	c.closeOnce.Do(func() {
 		close(c.closed)
-		<-c.dispatcherLoopStopped // block here, pos unavailable
+		<-c.dispatcherLoopStopped // block here
 	})
 }
 

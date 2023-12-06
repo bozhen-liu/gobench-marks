@@ -64,7 +64,7 @@ type Cacher struct {
 }
 
 func (c *Cacher) processEvent() {
-	c.Lock()
+	c.Lock() // block here, leaking
 	defer c.Unlock()
 }
 
@@ -109,7 +109,7 @@ func (w *WatchCache) Add(obj interface{}) {
 }
 
 func (w *WatchCache) Replace(obj interface{}) {
-	w.Lock()
+	w.Lock() // block here, leaking
 	defer w.Unlock()
 	if w.onReplace != nil {
 		w.onReplace()
