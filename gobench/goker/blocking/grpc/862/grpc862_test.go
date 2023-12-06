@@ -56,7 +56,7 @@ func (ac *addrConn) resetTransport() {
 		cancel()
 		select { // Block here
 		case <-time.After(sleepTime - time.Since(connectTime)):
-		case <-ac.ctx.Done():
+		case <-ac.ctx.Done(): // or Block here
 			return
 		}
 	}

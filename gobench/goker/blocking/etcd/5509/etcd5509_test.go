@@ -100,5 +100,5 @@ func TestEtcd5509(t *testing.T) {
 
 	cli.Close()
 
-	<-donec
+	<-donec // block here since defer close is never executed
 }

@@ -154,12 +154,12 @@ type DeltaFIFO struct {
 }
 
 func (f *DeltaFIFO) HasSynced() {
-	f.lock.Lock()
+	f.lock.Lock() // block here
 	defer f.lock.Unlock()
 }
 
 func (f *DeltaFIFO) Pop(process PopProcessFunc) {
-	f.lock.Lock()
+	f.lock.Lock() // block here
 	defer f.lock.Unlock()
 	process()
 }

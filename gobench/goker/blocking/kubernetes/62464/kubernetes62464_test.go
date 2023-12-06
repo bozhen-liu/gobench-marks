@@ -39,7 +39,7 @@ func (s *stateMemory) GetCPUSetOrDefault() {
 }
 
 func (s *stateMemory) GetCPUSet() bool {
-	s.RLock()
+	s.RLock() // blocked here
 	defer s.RUnlock()
 
 	if rand.Intn(10) > 5 {
@@ -49,12 +49,12 @@ func (s *stateMemory) GetCPUSet() bool {
 }
 
 func (s *stateMemory) GetDefaultCPUSet() {
-	s.RLock() // blocked here
+	s.RLock() 
 	defer s.RUnlock()
 }
 
 func (s *stateMemory) SetDefaultCPUSet() {
-	s.Lock()
+	s.Lock() // blocked here
 	defer s.Unlock()
 }
 

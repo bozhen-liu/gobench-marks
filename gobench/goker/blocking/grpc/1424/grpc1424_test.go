@@ -83,7 +83,7 @@ func DialContext() {
 		if ch != nil {
 			doneChan := make(chan bool)
 			go cc.lbWatcher(doneChan) // G3
-			<-doneChan                /// Block here, but pos unavailable
+			<-doneChan                /// Block here
 		}
 	}()
 	/// close addrCh

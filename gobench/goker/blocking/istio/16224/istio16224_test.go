@@ -90,7 +90,7 @@ func TestIstio16224(t *testing.T) {
 	controller.RegisterEventHandler(func(event Event) {
 		lock.Lock() //Blocked here, depends on who locks first
 		defer lock.Unlock()
-		done <- true //Blocked here, pos unavailable
+		done <- true //Blocked here
 	})
 
 	stop := make(chan struct{})

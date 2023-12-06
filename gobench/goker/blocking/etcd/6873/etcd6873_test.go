@@ -43,7 +43,7 @@ func (wbs *watchBroadcasts) stop() {
 	wbs.mu.Lock()
 	defer wbs.mu.Unlock()
 	close(wbs.updatec)
-	<-wbs.donec // block here, but pos unavailable
+	<-wbs.donec // block here
 }
 
 func (wbs *watchBroadcasts) update(wb *watchBroadcast) {

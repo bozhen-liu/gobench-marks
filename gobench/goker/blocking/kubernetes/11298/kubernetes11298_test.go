@@ -56,7 +56,7 @@ func (n *notifier) serviceLoop(abort <-chan struct{}) {
 			ch := After(n.cond.Wait)
 			select {
 			case <-abort: 
-				n.cond.Signal()
+				n.cond.Signal() // cannot send signal
 				<-ch
 				return
 			case <-ch: // waiting here

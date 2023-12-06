@@ -46,7 +46,7 @@ func runElectionFunc() {
 				close(nextc)
 				nextc = make(chan bool)
 			}
-			<-rcNextc // Followers is blocking here, but pos unavailable
+			<-rcNextc // Followers is blocking here
 		}
 	}
 	doRounds(rcs, 100)

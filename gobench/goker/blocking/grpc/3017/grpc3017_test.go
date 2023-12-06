@@ -92,5 +92,5 @@ func TestGrpc3017(t *testing.T) {
 		}
 		close(done)
 	}()
-	<-done
+	<-done // block here since the goroutine cannot terminate
 }

@@ -98,7 +98,7 @@ func (w *Watcher) Remove() {
 	defer w.mu.Unlock()
 	exists := true
 	for exists {
-		w.cv.Wait()
+		w.cv.Wait() // block here
 	}
 }
 

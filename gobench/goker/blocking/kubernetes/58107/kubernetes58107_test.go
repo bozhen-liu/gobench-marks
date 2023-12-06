@@ -59,7 +59,7 @@ type ResourceQuotaController struct {
 
 func (rq *ResourceQuotaController) worker(queue RateLimitingInterface, name string) func() {
 	workFunc := func() bool {
-		rq.workerLock.RLock()
+		rq.workerLock.RLock() // block here: double lock
 		defer rq.workerLock.RUnlock()
 		queue.Get()
 		return true
@@ -80,7 +80,7 @@ func (rq *ResourceQuotaController) Run() {
 
 func (rq *ResourceQuotaController) Sync() {
 	for i := 0; i < 100000; i++ {
-		rq.workerLock.Lock()
+		rq.workerLock.Lock() // first lock here
 		time.Sleep(time.Nanosecond)
 		rq.workerLock.Unlock()
 	}

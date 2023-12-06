@@ -37,7 +37,7 @@ type recvBufferReader struct {
 
 func (r *recvBufferReader) Read(p []byte) (int, error) {
 	select {
-	case <-r.recv.get(): // G2 block here, pos unavailable
+	case <-r.recv.get(): // G2 block here 
 	}
 	return 0, nil
 }

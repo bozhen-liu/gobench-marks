@@ -59,7 +59,7 @@ func (r *Replica) beginCmds(ctx context.Context) {
 		case <-ctxDone:
 			go func() {
 				for _, ch := range r.chans {
-					<-ch // block here, leaking, but pos unavailable
+					<-ch // block here, leaking
 				}
 			}()
 		}

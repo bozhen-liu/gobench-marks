@@ -27,7 +27,7 @@ type Store struct {
 }
 
 func (s *Store) ForceRaftLogScanAndProcess() {
-	s.mu.RLock() // block here 
+	s.mu.RLock() // 1st rlock
 	for _, r := range s.replicas {
 		s.raftLogQueue.MaybeAdd(r)
 	}
@@ -35,7 +35,7 @@ func (s *Store) ForceRaftLogScanAndProcess() {
 }
 
 func (s *Store) RaftStatus() {
-	s.mu.RLock()
+	s.mu.RLock() // block here 
 	defer s.mu.RUnlock()
 }
 

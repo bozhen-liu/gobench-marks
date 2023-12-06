@@ -58,10 +58,10 @@ func NewTransfer() *Transfer {
 	return &Transfer{}
 }
 func (t *Transfer) Release(watcher *Watcher) {
-	t.mu.Lock()
+	t.mu.Lock() 
 	t.mu.Unlock()
 	close(watcher.releaseChan)
-	<-watcher.running
+	<-watcher.running // block here
 }
 func (t *Transfer) Watch(progressOutput Output) *Watcher {
 	t.mu.Lock()
@@ -110,7 +110,7 @@ func testTransfer() {
 	progressChan := make(chan Progress)
 	progressDone := make(chan struct{})
 	go func() { // G3
-		for p := range progressChan { /// Chan consumer
+		for p := range progressChan { /// Chan consumer, block here
 			if rand.Int31n(2) >= 1 {
 				return
 			}

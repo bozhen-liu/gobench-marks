@@ -48,7 +48,7 @@ func NewReplica(store *Store) *Replica {
 type consistencyQueue struct{}
 
 func (q *consistencyQueue) process(repl *Replica) {
-	<-repl.store.Stopper().ShouldQuiesce() // block here, but pos is unavailable
+	<-repl.store.Stopper().ShouldQuiesce() // block here
 }
 
 func newConsistencyQueue() *consistencyQueue {
