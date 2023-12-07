@@ -12,24 +12,24 @@ type Gossip struct {
 
 func (g *Gossip) bootstrap() {
 	for {
-		g.mu.Lock()
+		g.mu.Lock()// block@premature return
 		if g.closed {
 			/// Missing g.mu.Unlock
 			break
 		}
-		g.mu.Unlock()// block@premature return
+		g.mu.Unlock()
 		break
 	}
 }
 
 func (g *Gossip) manage() {
 	for {
-		g.mu.Lock()
+		g.mu.Lock()// block@premature return
 		if g.closed {
 			/// Missing g.mu.Unlock
 			break
 		}
-		g.mu.Unlock()// block@premature return
+		g.mu.Unlock()
 		break
 	}
 }

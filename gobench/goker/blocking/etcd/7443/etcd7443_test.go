@@ -189,7 +189,7 @@ func newSimpleBalancer() *simpleBalancer {
 	for i := 0; i < 3; i++ {
 		addrs[i] = Address(i)
 	}
-	notifyCh <- addrs
+	notifyCh <- addrs // block here
 	return &simpleBalancer{
 		addrs:    addrs,
 		notifyCh: notifyCh,

@@ -24,7 +24,7 @@ func (b *Breaker) Maybe(thunk func()) bool {
 	default:
 		// Pending request queue is full.  Report failure.
 		return false
-	case b.pendingRequests <- t:
+	case b.pendingRequests <- t: // block here
 		// Pending request has capacity.
 		// Wait for capacity in the active queue.
 		b.activeRequests <- t
@@ -76,7 +76,7 @@ func NewBreaker(queueDepth, maxConcurrency int32) *Breaker {
 func unlock(req request) {
 	req.lock.Unlock()
 	// Verify that function has completed
-	ok := <-req.accepted
+	ok := <-req.accepted // block here
 	// Requeue for next usage
 	req.accepted <- ok
 }
