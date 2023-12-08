@@ -25,7 +25,7 @@ type DeviceSet struct {
 }
 
 func (devices *DeviceSet) DeleteDevice(hash string) {
-	devices.Lock() // block here
+	devices.Lock() 
 	defer devices.Unlock()
 
 	info := devices.lookupDevice(hash)
@@ -50,9 +50,9 @@ func (devices *DeviceSet) deleteDevice(info *DevInfo) {
 
 func (devices *DeviceSet) removeDeviceAndWait(devname string) {
 	/// remove devices by devname
-	devices.Unlock()
+	devices.Unlock() 
 	time.Sleep(300 * time.Nanosecond)
-	devices.Lock()
+	devices.Lock() // block here
 }
 
 type DevInfo struct {

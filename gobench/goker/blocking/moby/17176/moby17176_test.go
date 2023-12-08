@@ -31,12 +31,12 @@ type DeviceSet struct {
 }
 
 func (devices *DeviceSet) cleanupDeletedDevices() error {
-	devices.Lock()
+	devices.Lock()// missing unlock 
 	if devices.nrDeletedDevices == 0 {
 		/// Missing devices.Unlock()
 		return nil
 	}
-	devices.Unlock() // missing unlock 
+	devices.Unlock() 
 	return errors.New("Error")
 }
 
