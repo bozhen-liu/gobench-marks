@@ -19,7 +19,7 @@ type UDPProxy struct {
 
 func (proxy *UDPProxy) Run() {
 	for i := 0; i < 2; i++ {
-		proxy.connTrackLock.Lock()
+		proxy.connTrackLock.Lock()  // missing unlock
 		_, err := net.DialUDP("udp", nil, nil)
 		if err != nil {
 			/// Missing unlock here
@@ -29,7 +29,7 @@ func (proxy *UDPProxy) Run() {
 			break
 		}
 	}
-	proxy.connTrackLock.Unlock() // missing unlock in previous return
+	proxy.connTrackLock.Unlock()
 }
 func TestMoby7559(t *testing.T) {
 	proxy := &UDPProxy{}

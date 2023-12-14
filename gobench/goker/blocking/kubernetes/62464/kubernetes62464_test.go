@@ -30,7 +30,7 @@ type stateMemory struct {
 }
 
 func (s *stateMemory) GetCPUSetOrDefault() {
-	s.RLock()
+	s.RLock() // or blocked here
 	defer s.RUnlock()
 	if ok := s.GetCPUSet(); ok {
 		return
